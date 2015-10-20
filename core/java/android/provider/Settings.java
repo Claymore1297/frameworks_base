@@ -5225,6 +5225,17 @@ public final class Settings {
         public static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR =
                 ANY_INTEGER_VALIDATOR;
 
+         /**
+          * Whether the HighTouchSensitivity is activated or not.
+          * 0 = off, 1 = on
+          */
+         public static final String HIGH_TOUCH_SENSITIVITY_ENABLE =
+                 "high_touch_sensitivity_enable";
+
+         /** @hide */
+         private static final Validator HIGH_TOUCH_SENSITIVITY_ENABLE_VALIDATOR =
+                 BOOLEAN_VALIDATOR;
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -5372,6 +5383,7 @@ public final class Settings {
             THEMING_CORNERS,
             THEMING_QS_SHAPE,
             THEMING_SETTINGS_DASHBOARD_ICONS,
+            HIGH_TOUCH_SENSITIVITY_ENABLE,
             // AICP Settings end
         };
 
@@ -5583,6 +5595,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(GLOBAL_ACTIONS_SCREENRECORD);
             PRIVATE_SETTINGS.add(THEMING_QS_SHAPE);
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
+            PRIVATE_SETTINGS.add(HIGH_TOUCH_SENSITIVITY_ENABLE);
             // AICP Settings end
         }
 
@@ -5774,6 +5787,7 @@ public final class Settings {
             VALIDATORS.put(THEMING_QS_SHAPE, THEMING_QS_SHAPE_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS,
                     THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
+            VALIDATORS.put(HIGH_TOUCH_SENSITIVITY_ENABLE,HIGH_TOUCH_SENSITIVITY_ENABLE_VALIDATOR);
             // AICP Settings end
         }
 
