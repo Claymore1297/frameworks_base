@@ -6005,6 +6005,12 @@ public final class Settings {
          */
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
+        /**
+         * Whether to display roaming indicator for roaming signal connection
+         * @hide
+         */
+        public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -6192,6 +6198,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_CLOCK_SIZE);
             PRIVATE_SETTINGS.add(QS_HEADER_CLOCK_SIZE);
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
+            PRIVATE_SETTINGS.add(ROAMING_INDICATOR_ICON);
         }
 
         /**
