@@ -17,6 +17,7 @@
 package com.android.systemui.shade;
 
 import android.app.StatusBarManager;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.session.MediaSessionLegacyHelper;
 import android.os.PowerManager;
@@ -94,8 +95,14 @@ public class NotificationShadeWindowViewController {
     private final DockManager mDockManager;
     private final NotificationPanelViewController mNotificationPanelViewController;
     private final ShadeExpansionStateManager mShadeExpansionStateManager;
+    private final PowerManager mPowerManager;
 
     private boolean mIsTrackingBarGesture = false;
+
+    private static final String DOUBLE_TAP_SLEEP_GESTURE =
+            Settings.System.DOUBLE_TAP_SLEEP_GESTURE;
+    private boolean mDoubleTapToSleepEnabled;
+    private int mQuickQsOffsetHeight;
 
     @Inject
     public NotificationShadeWindowViewController(
@@ -116,6 +123,7 @@ public class NotificationShadeWindowViewController {
             KeyguardUnlockAnimationController keyguardUnlockAnimationController,
             NotificationInsetsController notificationInsetsController,
             AmbientState ambientState,
+            Context context,
             PulsingGestureListener pulsingGestureListener,
             FeatureFlags featureFlags,
             KeyguardBouncerViewModel keyguardBouncerViewModel,
@@ -139,6 +147,7 @@ public class NotificationShadeWindowViewController {
         mAmbientState = ambientState;
         mPulsingGestureListener = pulsingGestureListener;
         mNotificationInsetsController = notificationInsetsController;
+        mPowerManager = context.getSystemService(PowerManager.class);
 
         // This view is not part of the newly inflated expanded status bar.
         mBrightnessMirror = mView.findViewById(R.id.brightness_mirror_container);
