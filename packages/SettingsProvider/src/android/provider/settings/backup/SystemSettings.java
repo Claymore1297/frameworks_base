@@ -105,5 +105,7 @@ public class SystemSettings {
         Settings.System.QS_FOOTER_TEXT_SHOW,
         Settings.System.QS_FOOTER_TEXT_STRING,
         Settings.System.CLICK_PARTIAL_SCREENSHOT,
+        Settings.System.TORCH_LONG_PRESS_POWER_GESTURE,
+        Settings.System.TORCH_LONG_PRESS_POWER_TIMEOUT,
     };
 }
