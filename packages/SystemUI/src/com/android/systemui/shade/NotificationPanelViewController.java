@@ -295,6 +295,8 @@ public final class NotificationPanelViewController implements Dumpable {
             Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
     private static final String DOUBLE_TAP_SLEEP_GESTURE =
             Settings.System.DOUBLE_TAP_SLEEP_GESTURE;
+    private static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
+            Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN;
 
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
@@ -569,6 +571,8 @@ public final class NotificationPanelViewController implements Dumpable {
     private final KeyguardIndicationController mKeyguardIndicationController;
     private boolean mDoubleTapToSleepEnabled;
     private GestureDetector mDoubleTapGesture;
+
+    private boolean mIsLockscreenDoubleTapEnabled;
 
     private int mHeadsUpInset;
     private boolean mHeadsUpPinnedMode;
@@ -5813,6 +5817,7 @@ public final class NotificationPanelViewController implements Dumpable {
             mConfigurationController.addCallback(mConfigurationListener);
             mTunerService.addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
             mTunerService.addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
+            mTunerService.addTunable(this, DOUBLE_TAP_SLEEP_LOCKSCREEN);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
             // force a call to onThemeChanged
@@ -5835,11 +5840,21 @@ public final class NotificationPanelViewController implements Dumpable {
 
         @Override
         public void onTuningChanged(String key, String newValue) {
-            if (STATUS_BAR_QUICK_QS_PULLDOWN.equals(key)) {
-                mOneFingerQuickSettingsIntercept = TunerService.parseInteger(newValue, 1);
-            }
-            if (DOUBLE_TAP_SLEEP_GESTURE.equals(key)) {
-                mDoubleTapToSleepEnabled = TunerService.parseIntegerSwitch(newValue, true);
+            switch (key) {
+                case STATUS_BAR_QUICK_QS_PULLDOWN:
+                    mOneFingerQuickSettingsIntercept =
+                            TunerService.parseInteger(newValue, 1);
+                    break;
+                case DOUBLE_TAP_SLEEP_GESTURE:
+                    mDoubleTapToSleepEnabled =
+                            TunerService.parseIntegerSwitch(newValue, true);
+                    break;
+                case DOUBLE_TAP_SLEEP_LOCKSCREEN:
+                    mIsLockscreenDoubleTapEnabled =
+                            TunerService.parseIntegerSwitch(newValue, true);
+                    break;
+                default:
+                    break;
             }
         }
     }
