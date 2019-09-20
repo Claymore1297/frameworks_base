@@ -152,5 +152,6 @@ public class SystemSettings {
         Settings.System.ANIM_TILE_STYLE,
         Settings.System.ANIM_TILE_DURATION,
         Settings.System.ANIM_TILE_INTERPOLATOR,
+        Settings.System.NAVIGATION_BAR_INVERSE,
     };
 }
