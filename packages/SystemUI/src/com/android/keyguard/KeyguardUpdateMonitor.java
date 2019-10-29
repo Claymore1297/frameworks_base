@@ -114,6 +114,8 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UserHandle;
 import android.os.UserManager;
+import android.pocket.IPocketCallback;
+import android.pocket.PocketManager;
 import android.provider.Settings;
 import android.service.dreams.IDreamManager;
 import android.telephony.CarrierConfigManager;
@@ -223,6 +225,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private static final int MSG_TIME_FORMAT_UPDATE = 344;
     private static final int MSG_REQUIRE_NFC_UNLOCK = 345;
     private static final int MSG_KEYGUARD_DISMISS_ANIMATION_FINISHED = 346;
+
+    // Additional messages should be 600+
+    private static final int MSG_POCKET_STATE_CHANGED = 600;
 
     /** Biometric authentication state: Not listening. */
     private static final int BIOMETRIC_STATE_STOPPED = 0;
@@ -420,6 +425,27 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private final Handler mHandler;
 
     private final IBiometricEnabledOnKeyguardCallback mBiometricEnabledCallback =
+    private PocketManager mPocketManager;
+    private boolean mIsDeviceInPocket;
+    private final IPocketCallback mPocketCallback = new IPocketCallback.Stub() {
+        @Override
+        public void onStateChanged(boolean isDeviceInPocket, int reason) {
+            boolean wasInPocket = mIsDeviceInPocket;
+            if (reason == PocketManager.REASON_SENSOR) {
+                mIsDeviceInPocket = isDeviceInPocket;
+            } else {
+                mIsDeviceInPocket = false;
+            }
+            if (wasInPocket != mIsDeviceInPocket) {
+                mHandler.sendEmptyMessage(MSG_POCKET_STATE_CHANGED);
+            }
+        }
+    };
+
+    public boolean isPocketLockVisible(){
+        return mPocketManager.isPocketLockVisible();
+    }
+
             new IBiometricEnabledOnKeyguardCallback.Stub() {
                 @Override
                 public void onChanged(boolean enabled, int userId) {
@@ -2238,6 +2264,9 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     case MSG_KEYGUARD_DISMISS_ANIMATION_FINISHED:
                         handleKeyguardDismissAnimationFinished();
                         break;
+                    case MSG_POCKET_STATE_CHANGED:
+                        updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE);
+                        break;
                     default:
                         super.handleMessage(msg);
                         break;
@@ -2298,6 +2327,12 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         setStrongAuthTracker(mStrongAuthTracker);
 
         if (mFpm != null) {
+
+        mPocketManager = (PocketManager) context.getSystemService(Context.POCKET_SERVICE);
+        if (mPocketManager != null) {
+            mPocketManager.addCallback(mPocketCallback);
+        }
+
             mFingerprintSensorProperties = mFpm.getSensorPropertiesInternal();
             mFpm.addLockoutResetCallback(mFingerprintLockoutResetCallback);
         }
@@ -2730,7 +2765,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         BiometricAuthenticated face = mUserFaceAuthenticated.get(getCurrentUser());
         return mAssistantVisible && mKeyguardOccluded
                 && !(face != null && face.mAuthenticated)
-                && !mUserHasTrust.get(getCurrentUser(), false);
+                && !mUserHasTrust.get(getCurrentUser(), false) && !mIsDeviceInPocket;
     }
 
     private boolean shouldTriggerActiveUnlockForAssistant() {
@@ -2790,7 +2825,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         boolean shouldListenSideFpsState = true;
         if (isSideFps) {
             shouldListenSideFpsState =
-                    mSfpsRequireScreenOnToAuthPrefEnabled ? isDeviceInteractive() : true;
+                    mSfpsRequireScreenOnToAuthPrefEnabled ? isDeviceInteractive() && !mIsDeviceInPocket : true;
         }
 
         boolean shouldListen = shouldListenKeyguardState && shouldListenUserState
