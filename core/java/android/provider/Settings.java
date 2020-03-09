@@ -6128,6 +6128,12 @@ public final class Settings {
          */
         public static final String NAVIGATION_BAR_INVERSE = "navigation_bar_inverse";
 
+        /**
+         * boolean value. toggles compact layout in navigation bar
+         * @hide
+         */
+        public static final String NAV_BAR_COMPACT_LAYOUT = "navigation_bar_compact_layout";
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -6332,6 +6338,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ANIM_TILE_DURATION);
             PRIVATE_SETTINGS.add(ANIM_TILE_INTERPOLATOR);
             PRIVATE_SETTINGS.add(NAVIGATION_BAR_INVERSE);
+            PRIVATE_SETTINGS.add(NAV_BAR_COMPACT_LAYOUT);
         }
 
         /**
