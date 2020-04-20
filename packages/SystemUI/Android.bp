@@ -181,6 +181,7 @@ android_library {
         "AicpGear-util",
         "colorkt",
         "themelib",
+        "vendor.lineage.powershare-V1.0-java",
     ],
     manifest: "AndroidManifest.xml",
     additional_manifests: ["AndroidManifest-Aicp.xml"],
@@ -300,6 +301,7 @@ android_library {
         "androidx.test.uiautomator",
         "mockito-target-extended-minus-junit4",
         "androidx.test.ext.junit",
+        "vendor.lineage.powershare-V1.0-java",
     ],
     libs: [
         "android.test.runner",
