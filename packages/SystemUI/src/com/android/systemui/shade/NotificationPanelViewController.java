@@ -297,6 +297,8 @@ public final class NotificationPanelViewController implements Dumpable {
             Settings.System.DOUBLE_TAP_SLEEP_GESTURE;
     private static final String DOUBLE_TAP_SLEEP_LOCKSCREEN =
             Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN;
+    private static final String QS_SMART_PULLDOWN =
+            Settings.System.QS_SMART_PULLDOWN;
 
     private static final Rect M_DUMMY_DIRTY_RECT = new Rect(0, 0, 1, 1);
     private static final Rect EMPTY_RECT = new Rect();
@@ -648,6 +650,7 @@ public final class NotificationPanelViewController implements Dumpable {
     private float mMinFraction;
 
     private int mOneFingerQuickSettingsIntercept;
+    private int mQsSmartPullDown;
 
     private boolean mStatusViewCentered = true;
 
@@ -2551,6 +2554,14 @@ public final class NotificationPanelViewController implements Dumpable {
                 showQsOverride = mView.isLayoutRtl() ? w - region < x : x < region;
                 break;
         }
+
+        if (mQsSmartPullDown == 1 && !hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 &&
+                !mEntryManager.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mEntryManager.hasActiveVisibleNotifications()) {
+                showQsOverride = true;
+        }
+
         showQsOverride &= mBarState == StatusBarState.SHADE;
 
         return twoFingerDrag || showQsOverride || stylusButtonClickDrag || mouseButtonClickDrag;
@@ -5818,6 +5829,7 @@ public final class NotificationPanelViewController implements Dumpable {
             mTunerService.addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
             mTunerService.addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
             mTunerService.addTunable(this, DOUBLE_TAP_SLEEP_LOCKSCREEN);
+            mTunerService.addTunable(this, QS_SMART_PULLDOWN);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
             // force a call to onThemeChanged
@@ -5852,6 +5864,10 @@ public final class NotificationPanelViewController implements Dumpable {
                 case DOUBLE_TAP_SLEEP_LOCKSCREEN:
                     mIsLockscreenDoubleTapEnabled =
                             TunerService.parseIntegerSwitch(newValue, true);
+                    break;
+                case QS_SMART_PULLDOWN:
+                    mQsSmartPullDown =
+                            TunerService.parseInteger(newValue, 0);
                     break;
                 default:
                     break;
