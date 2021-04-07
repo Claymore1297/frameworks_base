@@ -505,7 +505,7 @@ public class EdgeBackGestureHandler implements PluginListener<NavigationEdgeBack
 
     private void vibrateTick() {
             AsyncTask.execute(() ->
-                    mVibrator.vibrate(VibrationEffect.createOneShot(HAPTIC_DURATION, VibrationEffect.DEFAULT_AMPLITUDE)));
+                    mVibrator.vibrate(VibrationEffect.get(VibrationEffect.EFFECT_HEAVY_CLICK)));
     }
 
     private void disposeInputChannel() {
