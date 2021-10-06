@@ -179,6 +179,8 @@ android_library {
         "motion_tool_lib",
         "AicpGear-preference",
         "AicpGear-util",
+        "colorkt",
+        "themelib",
     ],
     manifest: "AndroidManifest.xml",
 
