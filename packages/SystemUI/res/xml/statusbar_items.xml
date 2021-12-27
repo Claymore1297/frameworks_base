@@ -95,6 +95,11 @@
         android:title="@*android:string/volume_unknown" />
 
     <com.android.systemui.tuner.StatusBarSwitch
+        android:icon="@drawable/ic_statusbar_phone"
+        android:key="call_strength"
+        android:title="@string/status_bar_call_strength" />
+
+    <com.android.systemui.tuner.StatusBarSwitch
         android:icon="@drawable/ic_statusbar_vpn"
         android:key="vpn"
         android:title="@string/status_bar_vpn" />
