@@ -177,6 +177,8 @@ android_library {
         "lottie",
         "LowLightDreamLib",
         "motion_tool_lib",
+        "AicpGear-preference",
+        "AicpGear-util",
     ],
     manifest: "AndroidManifest.xml",
 
