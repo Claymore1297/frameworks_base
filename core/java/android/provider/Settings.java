@@ -6098,6 +6098,11 @@ public final class Settings {
          */
         public static final String FLASHLIGHT_ON_CALL_RATE = "flashlight_on_call_rate";
 
+        /**
+         * @hide
+         */
+        public static final String QS_TRANSPARENCY = "qs_transparency";
+
         /***************************
          * AICP System Settings end
          ***************************/
@@ -6297,6 +6302,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_WAITING);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_IGNORE_DND);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL_RATE);
+            PRIVATE_SETTINGS.add(QS_TRANSPARENCY);
         }
 
         /**
