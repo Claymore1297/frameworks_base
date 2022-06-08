@@ -154,5 +154,6 @@ public class SystemSettings {
         Settings.System.ANIM_TILE_INTERPOLATOR,
         Settings.System.NAVIGATION_BAR_INVERSE,
         Settings.System.NAV_BAR_COMPACT_LAYOUT,
+        Settings.System.NAVIGATION_BAR_IME_SPACE,
     };
 }
