@@ -124,4 +124,7 @@
     <!-- Defines custom OEM sensor for pocket detection. -->
     <string name="config_pocketJudgeVendorSensorName"></string>
     <string name="config_pocketJudgeVendorProximitySensorName"></string>
+
+    <!-- Whether to handle audio direction changes between major call states -->
+    <bool name="config_handleAudioDirectionChangesBetweenCallStateChanges">true</bool>
 </resources>
