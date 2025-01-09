@@ -65,8 +65,7 @@ dependencies {
     api("androidx.lifecycle:lifecycle-runtime-compose")
     api("androidx.navigation:navigation-compose:2.8.0-beta01")
     api("com.github.PhilJay:MPAndroidChart:v3.1.0-alpha")
-    api("com.google.android.material:material:1.11.0")
-    api("androidx.graphics:graphics-shapes-android:1.0.1")
+    api("com.google.android.material:material:1.7.0-alpha03")
     debugApi("androidx.compose.ui:ui-tooling:$jetpackComposeVersion")
     implementation("com.airbnb.android:lottie-compose:5.2.0")
 
